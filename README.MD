@@ -8,6 +8,7 @@ Scaricare il repository in locale
 `git clone git@github.com:naddi96/NGNX-reverse-proxy-docker-configuration.git`
 
 n.b. tutti i comandi vanno eseguiti nella root del progetto e potrebbero richiedere il sudo. 
+
 Per avviare entrambi basta eseguire
 
 `docker-compose up -d`

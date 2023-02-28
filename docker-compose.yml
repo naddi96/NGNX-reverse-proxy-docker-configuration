@@ -1,24 +1,26 @@
 version: '3'
 services:
   webserver:
-    build: ./
+    build:
+      context: ./webserver
+      dockerfile: server.Dockerfile
     volumes: 
-      - ./html-page:/myapp
-    networks: 
-      - mynetwork
-    
-  reverseproxy:    
-    image: nginx:latest
+      - ./webserver/src:/myapp    
+  reverseproxy:
+    environment:
+      - DOMAIN_NAME= example.com
+      - EMAIL= example@example.com    
+      - PROXY_PASS_HOST=webserver 
+      - PROXY_PASS_PORT=8000  
+      - PROXY_PASS_PROTOCOL=http
+    build:
+      context: ./nginx
+      dockerfile: nginx.Dockerfile
     volumes:
-      - ./nginx-config-cert/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx-config-cert/cert.crt:/etc/nginx/cert.crt
-      - ./nginx-config-cert/cert.key:/etc/nginx/cert.key
+     # - ./nginx/cert:/etc/letsencrypt/live
+      - ./nginx/default.conf.template:/etc/nginx/conf.d/default.conf.template
     ports:
        - 443:443
        - 80:80
-    networks: 
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
+    links: 
+      - webserver

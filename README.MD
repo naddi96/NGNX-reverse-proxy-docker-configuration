@@ -1,28 +1,37 @@
-# Reverse Proxy e web server
-Semplice prova di un sito Web servito attraverso un reverse proxy NGINX cofigurato anche per certificati ssl.
-Il web server e NGINX sono eseguiti su due container docker distinti, chiamati rispettivamente "webserver" e "reverseproxy"
+# Reverse Proxy https for webservice
 
-# Istruzioni per l'uso:
-Scaricare il repository in locale
+How to configure nginx as a https reverse proxy for serving a webservice into the web.
+the webservice and nginx are executed on two distinct docker containers called "webserver" and "reverseproxy".
+
+The download and renewal of the certificate has been automated and require no input except for the insertion off your domain name and email into the `docker-compose.yml` file
+
+
+# How to use:
+
+clone the repository in your web server
 
 `git clone git@github.com:naddi96/NGNX-reverse-proxy-docker-configuration.git`
 
-n.b. tutti i comandi vanno eseguiti nella root del progetto e potrebbero richiedere il sudo. 
 
-Per avviare entrambi basta eseguire
+change directory into the repository
+
+`cd NGNX-reverse-proxy-docker-configuration`
+
+set the environment variable in the `docker-compose.yml` file according to your dns domain and email
+
+    environment:
+      - DOMAIN_NAME= yourdomain.com
+      - EMAIL= your@email.com    
+
+
+use standard docker-compose command for starting and stopping
 
 `docker-compose up -d`
 
-Mentre se si vuole stoppare ma non cancellare i due container
-
 `docker-compose stop`
-
-Se si vuole stoppare e cancellare i container
 
 `docker-compose down`
 
-Per generare un nuovo certificato autogenerato
-
-`openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-config-cert/cert.key -out nginx-config-cert/cert.crt`
+Congrats you now have a https on your webservice!
 
 

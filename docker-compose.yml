@@ -8,8 +8,8 @@ services:
       - ./webserver/src:/myapp    
   reverseproxy:
     environment:
-      - DOMAIN_NAME= example.com
-      - EMAIL= example@example.com    
+      - DOMAIN_NAME=example.com
+      - EMAIL=example@example.com    
       - PROXY_PASS_HOST=webserver 
       - PROXY_PASS_PORT=8000  
       - PROXY_PASS_PROTOCOL=http
